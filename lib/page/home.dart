@@ -1,5 +1,6 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:depot/common/rootbar.dart';
+import 'package:depot/page/add_goods.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,7 +16,6 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -45,26 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         // 添加底部导航栏
         bottomNavigationBar: BottonBar(context),
-        // BottomAppBar(
-        //     child: Row(
-        //   children: [
-        //     IconButton(onPressed: (() {}), icon: const Icon(Icons.home)),
-        //     const SizedBox(),
-        //     IconButton(
-        //         onPressed: (() {}),
-        //         icon: const Icon(Icons.account_box)), // 中间位置空出
-        //   ],
-        //    // 设置 row 组件中， 分布逻辑
-        //    mainAxisAlignment: MainAxisAlignment.spaceAround,   // 均分底部导航栏横向 空间
-        // )),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.centerDocked, // 设置float button 的显示位置
         floatingActionButton: IconButton(
             color: Colors.blue, // 按钮icon的颜色
-            // splashColor: Colors.blue,  // 点击时的背景颜色
-            // highlightColor: Colors.blue,
-
-            onPressed: (() {}),
+            // splashColor: Colors.blue,  // 一闪而过的 背景颜色
+            // highlightColor: Colors.blue,  // 点击时的背景颜色
+            onPressed: (() async {
+              var code = await ss();
+              print("code"+code.runtimeType.toString());
+              // var code1 = "12121";
+              Navigator.pushNamed(context, '/add_goods', arguments: {"code": code});
+              // Navigator.push(context, MaterialPageRoute(
+              //                               builder: (context) => AddGoods(code: code)));
+            }),
             icon: const Icon(Icons.add)),
         body: Center(
           child: Column(children: [
