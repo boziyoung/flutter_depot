@@ -19,6 +19,9 @@ class _AddGoodsState extends State<AddGoods> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _pricesController = TextEditingController();
 
+  // 初始化 可输入状态
+  bool editedstate = false;
+
   // 传入的参数值，不能直接在 controller 中使用
    @override
    // ignore: must_call_super
@@ -51,6 +54,7 @@ return Scaffold(
         // 使用 输入框进行记录和输入相关数据
         // code 输入框 商品的唯一确定码
         TextField(
+          enabled: editedstate,
           autofocus: true,
           // 设定键盘输入类型
           keyboardType: TextInputType.number,
@@ -122,6 +126,13 @@ return Scaffold(
               _countController.clear();
               _pricesController.clear();
             }, child: const Text("清除")),
+            TextButton(onPressed: (){
+              // 设置输入框 可输入状态
+              setState(() {
+                editedstate = true;
+              });
+              
+            }, child: const Text("编辑")),
             TextButton(onPressed: (){
               _addgoods();
               }, child: const Text("提交"),
