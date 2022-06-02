@@ -17,10 +17,14 @@ class BottonBar extends BottomAppBar {
                 const CircularNotchedRectangle(), // 底部导航栏打一个圆形的洞  思考这个 打孔的位置没有 具体显示位置
             child: Row(
               children: [
-                IconButton(onPressed: (() {}), icon: const Icon(Icons.home)),
+                IconButton(onPressed: (() {
+                   Navigator.pushNamed(context, "/");
+                }), icon: const Icon(Icons.home)),
                 const SizedBox(),
                 IconButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      Navigator.pushNamed(context, "/login");
+                    }),
                     icon: const Icon(Icons.account_box)), // 中间位置空出
               ],
               // 设置 row 组件中， 分布逻辑

@@ -4,6 +4,7 @@ import '../common/rootbar.dart';
 
 // ignore: must_be_immutable
 class AddGoods extends StatefulWidget {
+ // ignore: prefer_typing_uninitialized_variables
  final code;
  const AddGoods( {Key? key, this.code}):super(key: key);
  

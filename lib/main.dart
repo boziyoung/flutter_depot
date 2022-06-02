@@ -1,6 +1,7 @@
 // import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:depot/page/add_goods.dart';
 import 'package:depot/page/home.dart';
+import 'package:depot/page/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     final  routes = {
         "/": (context, {arguments}) => const MyHomePage(title: "W_depot"),
         "/add_goods": (context, {arguments}) =>  AddGoods(code: arguments),
+        "/login" :(context, {arguments}) => const Login(),
       };
 
 
