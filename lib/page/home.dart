@@ -1,6 +1,6 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:depot/common/rootbar.dart';
-import 'package:depot/page/add_goods.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -21,6 +21,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // goods info
+  // final goodsInfo = [];
+
   // 扫描二维码
   Future<String> ss() async {
     var options = const ScanOptions(strings: {
@@ -35,6 +38,23 @@ class _MyHomePageState extends State<MyHomePage> {
     print(result.format);
     print(result.formatNote);
     return result.rawContent;
+  }
+
+  // 查询 价格
+  Future<dynamic> getPrices(String code) async {
+    String url = "http://139.155.16.210:8000/depot/$code/get_code/";
+    print("路径：" + url);
+    Dio dio = Dio();
+    try {
+      Response _rep = await dio.get(url);
+      print(_rep.data[0]);
+      // return _rep.statusCode.toString();
+      if (_rep.statusCode.toString() == "200") {
+        return _rep.data;
+      }
+    } on Exception catch (e) {
+      return "404";
+    }
   }
 
   @override
@@ -53,9 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
             // highlightColor: Colors.blue,  // 点击时的背景颜色
             onPressed: (() async {
               var code = await ss();
-              print("code"+code.runtimeType.toString());
+              print("code" + code.runtimeType.toString());
+              Map map = {"code": code};
               // var code1 = "12121";
-              Navigator.pushNamed(context, '/add_goods', arguments: {"code": code});
+              Navigator.pushNamed(context, '/add_goods', arguments: {
+                "code": map,
+              });
               // Navigator.push(context, MaterialPageRoute(
               //                               builder: (context) => AddGoods(code: code)));
             }),
@@ -66,8 +89,18 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 50.0,
             ),
             TextButton.icon(
-                onPressed: () {
-                  ss();
+                onPressed: () async {
+                  var code = await ss();
+                  print("扫一扫：" + code);
+                  var sc = await getPrices(code);
+                  print("状态码: " + sc.toString());
+                  print(sc[0]);
+                  print(sc[0]["test"]);
+                  Navigator.pushNamed(context, "/add_goods",
+                      arguments: {"code": sc[0]});
+                  // Navigator.pushNamed(context, "/add_goods", arguments: {
+                  //   "code": goodsInfo[0],
+                  // });
                 },
                 icon: const Icon(Icons.search),
                 label: const Text("扫一扫"))

@@ -3,6 +3,7 @@
 抽离booton navigatorbar 必须实现PreferredSizeWidget
 抽离头部和底部相同的代码为 layout 组件
 */
+import 'package:depot/common/storage.dart';
 import 'package:flutter/material.dart';
 
 class BottonBar extends BottomAppBar {
@@ -17,13 +18,20 @@ class BottonBar extends BottomAppBar {
                 const CircularNotchedRectangle(), // 底部导航栏打一个圆形的洞  思考这个 打孔的位置没有 具体显示位置
             child: Row(
               children: [
-                IconButton(onPressed: (() {
-                   Navigator.pushNamed(context, "/");
-                }), icon: const Icon(Icons.home)),
-                const SizedBox(),
                 IconButton(
                     onPressed: (() {
-                      Navigator.pushNamed(context, "/login");
+                      Navigator.pushNamed(context, "/");
+                    }),
+                    icon: const Icon(Icons.home)),
+                const SizedBox(),
+                IconButton(
+                    onPressed: (() async {
+                      var t = await StorageOperation.get("test");
+                      if (t != null) {
+                        Navigator.pushNamed(context, "/userinfo");
+                      } else {
+                        Navigator.pushNamed(context, "/login");
+                      }
                     }),
                     icon: const Icon(Icons.account_box)), // 中间位置空出
               ],
