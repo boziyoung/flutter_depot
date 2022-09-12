@@ -1,7 +1,5 @@
 /*
 详细显示 所有商品的信息
-
-
  */
 
 import 'package:dio/dio.dart';

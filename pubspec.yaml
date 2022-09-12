@@ -40,6 +40,9 @@ dependencies:
   fluttertoast: ^8.0.9
   # 持久化 键值对
   shared_preferences: ^2.0.15
+  get: ^4.6.5
+  common_utils: ^2.1.0
+
 
 dev_dependencies:
   flutter_test:

@@ -4,7 +4,7 @@ import 'package:depot/common/storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../common/rootbar.dart';
+import '../../common/rootbar.dart';
 
 // ignore: must_be_immutable
 class AddGoods extends StatefulWidget {

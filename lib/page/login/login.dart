@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../common/rootbar.dart';
+import '../../common/rootbar.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
