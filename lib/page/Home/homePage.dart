@@ -1,33 +1,24 @@
 // import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:depot/common/rootbar.dart';
+import 'package:depot/page/login/login.dart';
 // import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../backend/AllGoodsList.dart';
 import 'homeController.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
   HomeController hc = Get.put(HomeController());
+  // 输入框编辑器控制器
+  TextEditingController vc = TextEditingController(text: "");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
-          ),
-          child: TextButton(
-              onPressed: () {
-                Get.offAllNamed('/');
-              },
-              child: const Text(
-                'Mrs.Wang Grocery Store',
-                style: TextStyle(fontSize: 22.0, color: Colors.white),
-              )),
-        ),
-        const Expanded(child: SizedBox())
-      ]),
+      appBar: MainAppbar(context),
       body: Center(
         child: Column(
           children: [
@@ -35,14 +26,63 @@ class MyHomePage extends StatelessWidget {
               height: 30,
             ),
             TextButton.icon(
-                onPressed: () {
-                  hc.getGoodsPrices("12312312");
-                  // var code = await hc.qs();
-                  // print("code: $code");
-                  // Get.toNamed("/$code/detail");
+                onPressed: () async {
+                  // hc.getGoodsPrices("12312312");
+                  // Get.toNamed('/12312311/detail');
+                  var code = await hc.qs();
+                  print("code: $code");
+                  Get.toNamed("/$code/detail");
                 },
                 icon: const Icon(Icons.search),
-                label: const Text("扫一扫"))
+                label: const Text("扫一扫")),
+            TextButton(
+                onPressed: () {
+                  print("文本输入查询");
+                  Get.defaultDialog(
+                    title: "输入您需要添加商品的Code码",
+                    titleStyle: const TextStyle(color: Colors.blue),
+                    content: TextField(
+                      // 设定键盘输入类型
+                      keyboardType: TextInputType.number,
+                      // 验证输入格式
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      ],
+                      // 用于控制TextField的外观显示，如提示文本、背景颜色、边框等。
+                      decoration: const InputDecoration(
+                          labelText: "Code",
+                          hintText: "商品Code码是系统中唯一值",
+                          prefixIcon: Icon(Icons.info)),
+                      // 获取输入数据内容 通过 controller 获取
+                      controller: vc,
+                    ),
+                    onConfirm: () {
+                      Get.offAllNamed("/${vc.text}/detail");
+                      // print(vc.text);
+                      // 删除 该商品后弹框 消失 回到 商品列表页面
+                    },
+                    onCancel: () {
+                      // 清空输入框
+                      vc.text = "";
+                    },
+                    textCancel: "取消",
+                    textConfirm: "确认",
+                    confirmTextColor: Colors.white,
+                    buttonColor: Colors.black,
+                    // 可自定义 cancel 和 confirm 按钮
+                    // 自定义 cancel  confirm  上面的各个按钮设置属性可以重新在 cancel 的 button 中显示
+                    // backgroundColor: Colors.grey.withOpacity(.5),
+
+                    barrierDismissible: false, // 点击其他地方，alert 不会消失
+                    radius: 10.0, // 圆角
+                  );
+                },
+                child: const Text("文本输入查询")),
+            TextButton(
+                onPressed: () {
+                  Get.to(GoodsListPage());
+                },
+                child: Text("list"))
           ],
         ),
       ),

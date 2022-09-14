@@ -1,7 +1,7 @@
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:get/get.dart';
 
-import '../../network/api.dart';
+// import '../../network/api.dart';
 
 class HomeController extends GetxController {
   var goodsInfo = {}.obs;
@@ -22,9 +22,16 @@ class HomeController extends GetxController {
     return result.rawContent;
   }
 
-  void getGoodsPrices(String code) async {
-    var response = await Api.getCodeInfo(code);
-    print(response);
-    goodsInfo = response;
-  }
+  // void getGoodsPrices(String code) async {
+  //   var response = await Api.getCodeInfo(code);
+  //   print("${response.runtimeType.toString()}\n test");
+  //   if (response.runtimeType.toString() == "Null") {
+  //     print("type is right");
+  //   } else if (response.runtimeType.toString() ==
+  //       "_InternalLinkedHashMap<String, dynamic>") {
+  //     print("content is right ");
+  //   }
+
+  //   // goodsInfo = response;
+  // }
 }

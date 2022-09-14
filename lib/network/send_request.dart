@@ -6,8 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 class Request {
   // 配置 Dio 实例
   static final BaseOptions _options = BaseOptions(
-    // baseUrl: 'https://www.boziyoung.space/api',
-    baseUrl: "http://127.0.0.1:8000",
+    baseUrl: 'http://1.14.121.231:8000',
+    // baseUrl: "http://127.0.0.1:8000",
     connectTimeout: 5000,
     receiveTimeout: 5000,
   );
@@ -18,7 +18,7 @@ class Request {
   static dynamic _request(String path,
       {String? method, Map? data, Map<String, dynamic>? headers}) async {
     // restful 请求处理
-    print("发生的path: $path");
+    // print("发生的path: $path");
 
     LogUtil.v("发生的data: $data");
     try {
@@ -45,6 +45,8 @@ class Request {
             webPosition: "center",
           );
         }
+      } else if (method == "delete" && response.statusCode == 204) {
+        return {"state": "ok"};
       } else {
         if (response.statusCode != null) {
           LogUtil.v(response.statusCode);

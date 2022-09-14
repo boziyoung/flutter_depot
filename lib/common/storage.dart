@@ -30,3 +30,10 @@ class StorageOperation {
     pers.remove(key);
   }
 }
+
+// loading 状态
+enum LoadingStatus {
+  loading,
+  success,
+  failed,
+}
